@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">记事本</string>
+    <string name="drawer_recycle">回收站</string>
+    <string name="drawer_private">私密记录</string>
+    <string name="settings">设置</string>
+    <string name="version_text">版本号：V2.3.4</string>
+    <string name="input_hint">请输入需要记录的内容</string>
+    <string name="send">发送</string>
+</resources>

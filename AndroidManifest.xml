@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.notebook">
+
+    <application
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <!-- 主页：记事列表 + 抽屉 + 发送栏 -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 回收站 -->
+        <activity
+            android:name=".RecycleBinActivity"
+            android:exported="false" />
+
+        <!-- 私密记录相关 -->
+        <activity
+            android:name=".PinLockActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PatternLockActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PrivateNotesActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangelogActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LicenseActivity"
+            android:exported="false" />
+    </application>
+</manifest>

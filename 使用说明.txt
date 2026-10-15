@@ -1,0 +1,44 @@
+记事本 V1.0.0 —— AIDE 使用说明
+==============================
+
+一、新建工程
+1. 打开手机 AIDE → 新建项目 →「新的 Android App」。
+2. 应用名填：记事本；包名填：com.example.notebook（必须与代码里的 package 一致）。
+3. 创建完成后，按下方清单逐文件粘贴内容。
+
+二、文件清单（路径 → 作用 → 新建/替换）
+
+【旧模板：AndroidManifest.xml 在工程根目录，src/、res/ 也在根目录】
+1. AndroidManifest.xml            → 应用配置，注册主页与回收站          → 替换
+2. res/values/strings.xml         → 应用名、按钮文字、版本号            → 替换
+3. res/values/styles.xml          → 无标题栏主题                        → 替换
+4. res/drawable/bg_card.xml       → 记事卡片圆角背景                    → 新建
+5. res/drawable/bg_tag_circle.xml → 标签圆形背景                        → 新建
+6. res/drawable/bg_tag_del.xml    → 标签删除叉的圆形背景                → 新建
+7. res/layout/activity_main.xml   → 主页布局（顶栏+抽屉+列表+发送栏）    → 替换
+8. res/layout/activity_recycle.xml→ 回收站布局                          → 新建
+9. res/layout/item_note.xml       → 单条记事布局（时间+正文+标签+设置）  → 新建
+10. res/layout/item_tag.xml       → 单个标签圆（含右上角删除叉）        → 新建
+11. res/layout/dialog_input.xml   → 编辑/添加标签共用输入弹窗            → 新建
+12. src/com/example/notebook/Note.java            → 记事数据模型      → 新建
+13. src/com/example/notebook/NoteStorage.java     → 读写 history 文件  → 新建
+14. src/com/example/notebook/NoteAdapter.java     → 列表适配器         → 新建
+15. src/com/example/notebook/MainActivity.java    → 主页逻辑           → 新建
+16. src/com/example/notebook/RecycleBinActivity.java → 回收站逻辑      → 新建
+
+【注意】若你的 AIDE 工程显示为 app/src/main 结构（新模板），把文件放到对应位置：
+- AndroidManifest.xml → app/src/main/AndroidManifest.xml
+- java 文件 → app/src/main/java/com/example/notebook/
+- res 目录 → app/src/main/res/（原结构整体复制）
+
+三、编译运行
+全部粘贴完成后，点 AIDE 右上角 Run → 自动编译打包 → 一键安装到手机。
+
+四、数据存放位置
+/data/data/com.example.notebook/history/notebook_history.txt
+（普通记事与回收站分 "normal" / "recycle" 两个区块，记录在同一个 JSON 文件里。）
+
+五、常见报错
+- 报 "R 找不到"：检查 res 下资源 id 与代码引用是否一致（尤其新建的 layout/drawable 名）。
+- 报找不到 Activity：检查 Manifest 里 .MainActivity / .RecycleBinActivity 与类名、包名是否一致。
+- 抽屉没出现：确认 MainActivity 里 setContentView(R.layout.activity_main) 与 activity_main.xml 匹配。

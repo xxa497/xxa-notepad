@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <!-- 顶部栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="#2B7DE9"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图案密码"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="连接至少 4 个点"
+        android:textColor="#333333"
+        android:textSize="16sp" />
+
+    <!-- 九宫格图案 -->
+    <com.example.notebook.PatternLockView
+        android:id="@+id/pattern_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/btn_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:padding="10dp"
+        android:text="改用数字密码"
+        android:textColor="#2B7DE9"
+        android:textSize="14sp" />
+</LinearLayout>

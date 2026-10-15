@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 顶部栏：返回 + 标题 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="#2B7DE9"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btn_back"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="←"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="私密记录"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="48dp"
+            android:layout_height="1dp" />
+    </LinearLayout>
+
+    <!-- 列表 -->
+    <ListView
+        android:id="@+id/list_private"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbars="none" />
+
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="私密记录是空的，在下方写一条吧"
+        android:textColor="#9E9E9E"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_insert_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF8E1"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text="正在向下方插入私密记录：输入内容后点发送（点此取消）"
+        android:textColor="#F57F17"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <!-- 底部发送栏（与主页同款） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F5F5F5"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="6dp">
+
+        <EditText
+            android:id="@+id/et_input"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical"
+            android:hint="请输入私密内容"
+            android:imeOptions="actionSend"
+            android:inputType="text"
+            android:maxLines="3"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:textColor="#333333"
+            android:textColorHint="#9E9E9E"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/bg_send"
+            android:gravity="center"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:stateListAnimator="@null"
+            android:text="发送"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+    </LinearLayout>
+</LinearLayout>

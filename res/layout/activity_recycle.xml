@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 顶部小栏：返回 + 标题 + 永久删除垃圾桶 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="#2B7DE9"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btn_back"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="←"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="回收站"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btn_delete_forever"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            android:contentDescription="永久删除"
+            android:src="@android:drawable/ic_menu_delete" />
+    </LinearLayout>
+
+    <!-- 回收站记事列表（与主页记事同款式） -->
+    <ListView
+        android:id="@+id/list_recycle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbars="none" />
+
+    <!-- 空状态 -->
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="回收站是空的"
+        android:textColor="#9E9E9E"
+        android:textSize="15sp" />
+</LinearLayout>
