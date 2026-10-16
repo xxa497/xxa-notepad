@@ -2,9 +2,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.notebook">
 
+    <!-- 联网检查 GitHub 更新；允许更新包唤起系统安装界面 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- 读取用户文件作为记事附件（首次会弹系统授权） -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 拍照作为记事附图 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+
+        <!-- 给系统安装器读取更新包用的最小 FileProvider（7.0+ 不允许 file://） -->
+        <provider
+            android:name=".ApkFileProvider"
+            android:authorities="com.example.notebook.apkprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" />
+
+        <!-- 首次启动 / 升级后弹出的权限与隐私协议页 -->
+        <activity
+            android:name=".FirstRunActivity"
+            android:exported="false" />
 
         <!-- 主页：记事列表 + 抽屉 + 发送栏 -->
         <activity

@@ -42,3 +42,4 @@
 - 报 "R 找不到"：检查 res 下资源 id 与代码引用是否一致（尤其新建的 layout/drawable 名）。
 - 报找不到 Activity：检查 Manifest 里 .MainActivity / .RecycleBinActivity 与类名、包名是否一致。
 - 抽屉没出现：确认 MainActivity 里 setContentView(R.layout.activity_main) 与 activity_main.xml 匹配。
+

@@ -10,16 +10,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * 回收站：
- * 条目与主页记事同款式；设置菜单只有“恢复”；
- * 右上角垃圾桶进入多选，可永久删除。
+ * 条目与主页记事同款式；扳手菜单有"恢复"和"彻底删除"；
+ * 右上角垃圾桶进入多选模式，行左边出现圆圈勾选，批量彻底删除带二次警告。
  */
 public class RecycleBinActivity extends Activity implements NoteAdapter.Callback {
 
-    /** 弹窗统一使用浅色 Material 风格 */
     private static final int DIALOG_THEME = android.R.style.Theme_Material_Light_Dialog_Alert;
 
     private NoteStorage storage;
@@ -38,19 +38,65 @@ public class RecycleBinActivity extends Activity implements NoteAdapter.Callback
 
         adapter = new NoteAdapter(this, storage.getRecycle(), this);
         listView.setAdapter(adapter);
+        adapter.setOnSelectionChangedListener(count -> {
+            TextView tv = (TextView) findViewById(R.id.tv_batch_count);
+            if (tv != null) tv.setText("已选 " + count + " 条");
+        });
 
-        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+
+        final TextView tvBatchCount = (TextView) findViewById(R.id.tv_batch_count);
+        // 右上角垃圾桶：切换批量选择模式
+        findViewById(R.id.btn_delete_forever).setOnClickListener(v -> {
+            if (storage.getRecycle().isEmpty()) {
+                Toast.makeText(this, "回收站是空的", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            enterBatchMode(!adapter.isBatchMode());
+            tvBatchCount.setText("已选 0 条");
+        });
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            if (adapter.isBatchMode()) {
+                adapter.toggleSelection(position);
+                tvBatchCount.setText("已选 " + adapter.getSelected().size() + " 条");
             }
         });
-        findViewById(R.id.btn_delete_forever).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPermanentDeleteDialog();
+        findViewById(R.id.btn_batch_cancel).setOnClickListener(v -> enterBatchMode(false));
+        findViewById(R.id.btn_batch_delete).setOnClickListener(v -> {
+            List<Integer> positions = new ArrayList<>(adapter.getSelected());
+            if (positions.isEmpty()) {
+                Toast.makeText(this, "还没勾选任何记录", Toast.LENGTH_SHORT).show();
+                return;
             }
+            confirmPermanentDelete(positions);
         });
+    }
+
+    private void enterBatchMode(boolean on) {
+        adapter.setBatchMode(on);
+        findViewById(R.id.batch_bar).setVisibility(on ? View.VISIBLE : View.GONE);
+        TextView tvBatchCount = (TextView) findViewById(R.id.tv_batch_count);
+        if (tvBatchCount != null) tvBatchCount.setText("已选 0 条");
+    }
+
+    /** 二次警告：彻底删除 */
+    private void confirmPermanentDelete(List<Integer> positions) {
+        List<Note> list = storage.getRecycle();
+        new AlertDialog.Builder(this, DIALOG_THEME)
+                .setTitle("彻底删除")
+                .setMessage("确定把选中的 " + positions.size() + " 条记录彻底删除吗？\n此操作不可恢复！")
+                .setNegativeButton("取消", null)
+                .setPositiveButton("再确认一次删除", (d, w) -> {
+                    List<Note> toDelete = new ArrayList<>();
+                    List<Integer> sorted = new ArrayList<>(positions);
+                    Collections.sort(sorted, Collections.reverseOrder());
+                    for (int p : sorted) toDelete.add(list.get(p));
+                    storage.permanentDelete(toDelete);
+                    enterBatchMode(false);
+                    reload();
+                    Toast.makeText(this, "已彻底删除 " + toDelete.size() + " 条", Toast.LENGTH_SHORT).show();
+                })
+                .show();
     }
 
     @Override
@@ -69,12 +115,23 @@ public class RecycleBinActivity extends Activity implements NoteAdapter.Callback
     public void onSettings(final Note note, View anchor) {
         new AlertDialog.Builder(this, DIALOG_THEME)
                 .setTitle("操作")
-                .setItems(new String[]{"恢复"}, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setItems(new String[]{"恢复", "彻底删除"}, (dialog, which) -> {
+                    if (which == 0) {
                         storage.restore(note);
                         reload();
-                        Toast.makeText(RecycleBinActivity.this, "已恢复", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "已恢复", Toast.LENGTH_SHORT).show();
+                    } else if (which == 1) {
+                        new AlertDialog.Builder(this, DIALOG_THEME)
+                                .setTitle("彻底删除")
+                                .setMessage("确定把这条记录彻底删除吗？此操作不可恢复！")
+                                .setNegativeButton("取消", null)
+                                .setPositiveButton("删除", (d, w) -> {
+                                    List<Note> one = new ArrayList<>();
+                                    one.add(note);
+                                    storage.permanentDelete(one);
+                                    reload();
+                                })
+                                .show();
                     }
                 })
                 .show();
@@ -84,48 +141,5 @@ public class RecycleBinActivity extends Activity implements NoteAdapter.Callback
     public void onTagDelete(Note note, String tag) {
         storage.removeTag(note, tag);
         reload();
-    }
-
-    /** 右上角垃圾桶：多选后永久删除 */
-    private void showPermanentDeleteDialog() {
-        final List<Note> list = storage.getRecycle();
-        if (list.isEmpty()) {
-            Toast.makeText(this, "回收站是空的", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        final boolean[] checked = new boolean[list.size()];
-        String[] titles = new String[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            String c = list.get(i).content.replace('\n', ' ');
-            titles[i] = (c.length() > 24 ? c.substring(0, 24) + "…" : c);
-        }
-        new AlertDialog.Builder(this, DIALOG_THEME)
-                .setTitle("选择要永久删除的记事")
-                .setMultiChoiceItems(titles, checked, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        checked[which] = isChecked;
-                    }
-                })
-                .setPositiveButton("永久删除", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        List<Note> toDelete = new ArrayList<Note>();
-                        for (int i = 0; i < checked.length; i++) {
-                            if (checked[i]) {
-                                toDelete.add(list.get(i));
-                            }
-                        }
-                        if (toDelete.isEmpty()) {
-                            Toast.makeText(RecycleBinActivity.this, "未选择任何记事", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        storage.permanentDelete(toDelete);
-                        reload();
-                        Toast.makeText(RecycleBinActivity.this, "已永久删除 " + toDelete.size() + " 条", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setNegativeButton("取消", null)
-                .show();
     }
 }

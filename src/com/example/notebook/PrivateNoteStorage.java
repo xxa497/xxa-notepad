@@ -102,22 +102,28 @@ public class PrivateNoteStorage {
         save();
     }
 
-    public void addNoteTop(String content, long timeMillis, String timeText) {
+    public void addNoteTop(String content, long timeMillis, String timeText,
+                           java.util.List<String> images, java.util.List<String> files) {
         Note n = new Note();
         n.id = timeMillis;
         n.timeMillis = timeMillis;
         n.timeText = timeText;
         n.content = content;
+        if (images != null) n.images.addAll(images);
+        if (files != null) n.files.addAll(files);
         notes.add(0, n);
         save();
     }
 
-    public void insertNoteBelow(int index, String content, long timeMillis, String timeText) {
+    public void insertNoteBelow(int index, String content, long timeMillis, String timeText,
+                                java.util.List<String> images, java.util.List<String> files) {
         Note n = new Note();
         n.id = timeMillis;
         n.timeMillis = timeMillis;
         n.timeText = timeText;
         n.content = content;
+        if (images != null) n.images.addAll(images);
+        if (files != null) n.files.addAll(files);
         int pos = index + 1;
         if (pos > notes.size()) {
             pos = notes.size();

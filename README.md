@@ -9,6 +9,8 @@
 - **私密记录**：独立加密分区，支持数字密码 / 九宫格图案密码（仅存 SHA-256 摘要），数据与普通记事完全分开存储，删除即永久删除
 - **设置**：修改密码（先验旧密码）、重置密码（二次确认，清空私密记录）
 - **更新日志**：应用内查看版本更新记录
+- **记事附图/附件**：底部「+」按钮可从相册选图、拍照，或上传任意文件；图片与文件随记事一起保存，文件条显示文件名、修改日期与大小
+- **应用内更新**：双击抽屉里的版本号卡片，自动检查 GitHub 最新 Release 并下载安装
 
 ## 截图
 
@@ -36,7 +38,7 @@
 aapt2 compile --dir res -o compiled.zip
 aapt2 link -o base.apk -I android.jar --manifest AndroidManifest.xml \
   --java gen --min-sdk-version 21 --target-sdk-version 34 \
-  --version-code 10 --version-name "2.3.4" compiled.zip
+  --version-code 16 --version-name "4.7.4" compiled.zip
 javac --release 8 -cp android.jar -d classes gen/... R.java src/**/*.java
 d8 --lib android.jar --output dexout $(find classes -name "*.class")
 # 打包 classes.dex → zipalign → apksigner sign

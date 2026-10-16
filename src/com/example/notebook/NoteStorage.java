@@ -127,24 +127,30 @@ public class NoteStorage {
         return recycle;
     }
 
-    /** 新建记事，放在最上面（最新在前） */
-    public void addNoteTop(String content, long timeMillis, String timeText) {
+    /** 新建记事，放在最上面（最新在前），可附带图片和附件 */
+    public void addNoteTop(String content, long timeMillis, String timeText,
+                           java.util.List<String> images, java.util.List<String> files) {
         Note n = new Note();
         n.id = timeMillis;
         n.timeMillis = timeMillis;
         n.timeText = timeText;
         n.content = content;
+        if (images != null) n.images.addAll(images);
+        if (files != null) n.files.addAll(files);
         notes.add(0, n);
         save();
     }
 
-    /** 在指定位置下方插入一条 */
-    public void insertNoteBelow(int index, String content, long timeMillis, String timeText) {
+    /** 在指定位置下方一条，可附带图片和附件 */
+    public void insertNoteBelow(int index, String content, long timeMillis, String timeText,
+                                java.util.List<String> images, java.util.List<String> files) {
         Note n = new Note();
         n.id = timeMillis;
         n.timeMillis = timeMillis;
         n.timeText = timeText;
         n.content = content;
+        if (images != null) n.images.addAll(images);
+        if (files != null) n.files.addAll(files);
         int pos = index + 1;
         if (pos > notes.size()) {
             pos = notes.size();

@@ -31,9 +31,14 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <View
+        <TextView
+            android:id="@+id/btn_batch"
             android:layout_width="48dp"
-            android:layout_height="1dp" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="☑"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <!-- 列表 -->
@@ -68,8 +73,73 @@
         android:textSize="12sp"
         android:visibility="gone" />
 
+    <!-- 挂起附件预览条：图片小方块横排 + 文件长条横排，都带叉可删 -->
+    <HorizontalScrollView
+        android:id="@+id/pending_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:padding="6dp"
+        android:scrollbars="none"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/pending_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+    <!-- 批量删除操作条（默认隐藏） -->
+    <LinearLayout
+        android:id="@+id/batch_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFEBEE"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_batch_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="已选 0 条"
+            android:textColor="#C62828"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_batch_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="#D32F2F"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:stateListAnimator="@null"
+            android:text="删除"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_batch_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="#FFFFFF"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:stateListAnimator="@null"
+            android:text="取消"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+    </LinearLayout>
+
     <!-- 底部发送栏（与主页同款） -->
     <LinearLayout
+        android:id="@+id/bottom_input_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#F5F5F5"
@@ -99,7 +169,7 @@
             android:layout_width="wrap_content"
             android:layout_height="46dp"
             android:layout_marginStart="6dp"
-            android:layout_marginEnd="6dp"
+            android:layout_marginEnd="0dp"
             android:background="@drawable/bg_send"
             android:gravity="center"
             android:paddingLeft="18dp"
@@ -108,5 +178,19 @@
             android:text="发送"
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
+
+        <!-- 加号：点开底部弹窗，选图片/拍照 -->
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="6dp"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:stateListAnimator="@null"
+            android:text="+"
+            android:textColor="#2B7DE9"
+            android:textSize="24sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

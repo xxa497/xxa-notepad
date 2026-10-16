@@ -2,59 +2,108 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="2dp"
     android:background="@drawable/bg_card"
-    android:orientation="vertical"
-    android:padding="12dp">
+    android:elevation="2dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="14dp">
 
-    <!-- 时间：年月日 时分秒（读取系统时间） -->
+    <!-- 批量选择的圆形勾选框（默认隐藏，进入批量模式才显示） -->
     <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#9E9E9E"
-        android:textSize="12sp" />
+        android:id="@+id/checkbox_circle"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:visibility="gone" />
 
-    <!-- 正文 -->
-    <TextView
-        android:id="@+id/tv_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:lineSpacingExtra="2dp"
-        android:textColor="#333333"
-        android:textSize="16sp" />
-
-    <!-- 标签栏：左边一个圆一个圆（可横向滑动）+ 右侧设置按钮 -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <HorizontalScrollView
-            android:layout_width="0dp"
+        <!-- 时间：年月日 时分秒（读取系统时间） -->
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:scrollbars="none">
+            android:textColor="#9E9E9E"
+            android:textSize="12sp" />
+
+        <!-- 正文 -->
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:lineSpacingExtra="2dp"
+            android:textColor="#333333"
+            android:textSize="16sp" />
+
+        <!-- 标签栏：左边一个圆一个圆（可横向滑动）+ 右侧设置按钮 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <HorizontalScrollView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/tags_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingRight="4dp" />
+            </HorizontalScrollView>
+
+            <ImageButton
+                android:id="@+id/btn_settings"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="6dp"
+                android:background="#00000000"
+                android:contentDescription="设置"
+                android:src="@android:drawable/ic_menu_manage" />
+        </LinearLayout>
+
+        <!-- 记事附图：横向小方块横滑，点可预览；无图时隐藏 -->
+        <HorizontalScrollView
+            android:id="@+id/images_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:scrollbars="none"
+            android:visibility="gone">
 
             <LinearLayout
-                android:id="@+id/tags_container"
+                android:id="@+id/images_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingRight="4dp" />
+                android:orientation="horizontal" />
         </HorizontalScrollView>
 
-        <ImageButton
-            android:id="@+id/btn_settings"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="6dp"
-            android:background="#00000000"
-            android:contentDescription="设置"
-            android:src="@android:drawable/ic_menu_manage" />
+        <!-- 记事附件文件列表：无文件时隐藏，条目由适配器动态添加 -->
+        <LinearLayout
+            android:id="@+id/files_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

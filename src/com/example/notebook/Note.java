@@ -17,6 +17,8 @@ public class Note {
     public String timeText = "";     // 显示用时间文本：yyyy年MM月dd日 HH:mm:ss
     public String content = "";      // 正文内容
     public List<String> tags = new ArrayList<String>(); // 标签列表
+    public List<String> images = new ArrayList<String>(); // 附带图片文件名列表（存于应用 images 目录）
+    public List<String> files = new ArrayList<String>(); // 附带附件文件名列表（存于应用 files 目录）
 
     public Note() {
     }
@@ -28,10 +30,26 @@ public class Note {
         n.timeMillis = obj.optLong("time");
         n.timeText = obj.optString("timeText");
         n.content = obj.optString("content");
+        // 兼容旧版单图字段
+        String oldImg = obj.optString("image", "");
+        if (oldImg.length() > 0) n.images.add(oldImg);
         JSONArray arr = obj.optJSONArray("tags");
         if (arr != null) {
             for (int i = 0; i < arr.length(); i++) {
                 n.tags.add(arr.optString(i));
+            }
+        }
+        JSONArray imgArr = obj.optJSONArray("images");
+        if (imgArr != null) {
+            for (int i = 0; i < imgArr.length(); i++) {
+                String s = imgArr.optString(i);
+                if (s.length() > 0 && !n.images.contains(s)) n.images.add(s);
+            }
+        }
+        JSONArray farr = obj.optJSONArray("files");
+        if (farr != null) {
+            for (int i = 0; i < farr.length(); i++) {
+                n.files.add(farr.optString(i));
             }
         }
         return n;
@@ -45,6 +63,8 @@ public class Note {
         obj.put("timeText", timeText);
         obj.put("content", content);
         obj.put("tags", new JSONArray(tags));
+        obj.put("images", new JSONArray(images));
+        obj.put("files", new JSONArray(files));
         return obj;
     }
 }
