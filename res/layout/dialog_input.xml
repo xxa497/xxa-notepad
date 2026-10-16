@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingTop="6dp"
+    android:paddingRight="20dp">
+
+    <!-- 弹窗输入框：编辑内容 / 添加标签 共用，撑满宽度（确定/取消由弹窗按钮提供） -->
+    <EditText
+        android:id="@+id/et_dialog_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_input"
+        android:hint="输入内容"
+        android:padding="12dp"
+        android:textColor="#333333"
+        android:textColorHint="#9E9E9E"
+        android:textSize="15sp" />
+</LinearLayout>

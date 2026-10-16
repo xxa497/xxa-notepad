@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F7FB"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- 顶部标题 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="欢迎使用记事本"
+            android:textColor="#1A237E"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="一款简单、私密的本地记事应用"
+            android:textColor="#607D8B"
+            android:textSize="13sp" />
+
+        <!-- 权限说明卡片 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="本应用需要的权限"
+                android:textColor="#1A237E"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="4dp"
+                android:text="• 存储权限：保存你附加的图片和文件到本机；\n• 相机权限：允许你直接拍照作为记事附图；\n• 网络权限：仅用于双击版本号时检查 GitHub 上是否有新版本，不会上传任何你的数据；\n• 应用安装权限：用于把新版本 APK 直接装回本机。"
+                android:textColor="#455A64"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- 隐私政策卡片 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="隐私政策"
+                android:textColor="#1A237E"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="4dp"
+                android:text="你的所有记事、图片、附件都只保存在本机，我们不会上传、收集或分享你的任何个人数据。&#10;&#10;私密记录的密码只存在本机，忘记后无法找回，请自行牢记。&#10;&#10;点击下方「同意并继续」即表示你已阅读并同意以上内容。"
+                android:textColor="#455A64"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- 同意按钮 -->
+        <Button
+            android:id="@+id/btn_agree"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="28dp"
+            android:background="#2B7DE9"
+            android:stateListAnimator="@null"
+            android:text="同意并继续"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="版本 V4.7.4"
+            android:textColor="#90A4AE"
+            android:textSize="11sp" />
+    </LinearLayout>
+</ScrollView>
