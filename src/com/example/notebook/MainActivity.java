@@ -63,6 +63,7 @@ public class MainActivity extends Activity implements NoteAdapter.Callback {
     private static final int REQ_TAKE_PHOTO = 31;   // 拍照
     private static final int REQ_PICK_FILE = 32;    // 选择附件文件
     private static final int REQ_PERM_FILE = 33;    // 文件读取权限申请
+    private static final int REQ_PERM_CAMERA = 34;   // 拍照权限申请
     private String pendingEnterMode = "verify";
 
     /** 待随下一条记事一起保存的图片文件名列表（空=无图） */
@@ -261,10 +262,7 @@ public class MainActivity extends Activity implements NoteAdapter.Callback {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                Intent it = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                Uri out = Uri.parse("content://com.example.notebook.apkprovider/images/cam_tmp.jpg");
-                it.putExtra(MediaStore.EXTRA_OUTPUT, out);
-                startActivityForResult(it, REQ_TAKE_PHOTO);
+                startCamera();
             }
         });
         sheet.findViewById(R.id.btn_pick_file).setOnClickListener(new View.OnClickListener() {
@@ -288,6 +286,28 @@ public class MainActivity extends Activity implements NoteAdapter.Callback {
         launchFileIntent();
     }
 
+    /** 启动拍照；先申请相机权限，避免国产 ROM 直接闪退 */
+    private void startCamera() {
+        if (checkSelfPermission(android.Manifest.permission.CAMERA)
+                != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{android.Manifest.permission.CAMERA},
+                    REQ_PERM_CAMERA);
+            return;
+        }
+        launchCamera();
+    }
+
+    private void launchCamera() {
+        try {
+            Intent it = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            Uri out = Uri.parse("content://com.example.notebook.apkprovider/images/cam_tmp.jpg");
+            it.putExtra(MediaStore.EXTRA_OUTPUT, out);
+            startActivityForResult(it, REQ_TAKE_PHOTO);
+        } catch (Exception e) {
+            Toast.makeText(this, "无法打开相机：" + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void launchFileIntent() {
         Intent it = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         it.addCategory(Intent.CATEGORY_OPENABLE);
@@ -304,6 +324,12 @@ public class MainActivity extends Activity implements NoteAdapter.Callback {
                 launchFileIntent();
             } else {
                 Toast.makeText(this, "需要存储权限才能读取文件", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == REQ_PERM_CAMERA) {
+            if (grantResults.length > 0 && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                launchCamera();
+            } else {
+                Toast.makeText(this, "需要相机权限才能拍照，请在系统设置里授权", Toast.LENGTH_LONG).show();
             }
         }
     }
