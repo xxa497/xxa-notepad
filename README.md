@@ -38,7 +38,7 @@
 aapt2 compile --dir res -o compiled.zip
 aapt2 link -o base.apk -I android.jar --manifest AndroidManifest.xml \
   --java gen --min-sdk-version 21 --target-sdk-version 34 \
-  --version-code 16 --version-name "4.7.4" compiled.zip
+  --version-code 18 --version-name "4.8.5" compiled.zip
 javac --release 8 -cp android.jar -d classes gen/... R.java src/**/*.java
 d8 --lib android.jar --output dexout $(find classes -name "*.class")
 # 打包 classes.dex → zipalign → apksigner sign

@@ -4,7 +4,7 @@
     <string name="drawer_recycle">回收站</string>
     <string name="drawer_private">私密记录</string>
     <string name="settings">设置</string>
-    <string name="version_text">版本号：V4.7.4（双击检查更新）</string>
+    <string name="version_text">版本号：V4.8.5（双击检查更新）</string>
     <string name="input_hint">请输入需要记录的内容</string>
     <string name="send">发送</string>
 </resources>
